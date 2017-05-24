@@ -1,0 +1,24 @@
+{
+	"name" : "edwinhaq/yii2-listbox-dual",
+	"description" : "Listbox Dual",
+	"type" : "yii2-extension",
+	"keywords" : [
+		"yii2",
+		"extension"
+	],
+	"license" : "MIT",
+	"authors" : [{
+			"name" : "Edwin Artunduaga",
+			"email" : "edwinhaq@gmail.com",
+			"homepage" : "https://github.com/edwinhaq"
+		}
+	],
+	"require" : {
+		"yiisoft/yii2" : ">=2.0.11"
+	},
+	"autoload" : {
+		"psr-4" : {
+			"edwinhaq\\listboxdual\\" : ""
+		}
+	}
+}
