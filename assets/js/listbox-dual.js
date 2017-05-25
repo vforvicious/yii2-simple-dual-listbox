@@ -2,7 +2,7 @@
  * 
  */
 ;
-(function($)
+( function($)
 {
     var pluginName = 'listbox-dual';
 
@@ -36,7 +36,7 @@
 	var dst = "#" + id_dst;
 	var src = "#" + id_src;
 
-	var gen_button = $("<button>").addClass("listbox-dual-button");
+	var gen_button = $("<button>").addClass("listbox-dual-button btn btn-default");
 
 	var button_up = gen_button.clone().attr("id", "up_" + id_dst).text(settings.upButtonText);
 	var button_down = gen_button.clone().attr("id", "down_" + id_dst).text(settings.downButtonText);
@@ -51,9 +51,9 @@
 	{
 	    availableListBox.append($("<option>").attr("value", key).attr("title", value).text(value));
 	});
-	
+
 	clone = $(dst).clone(true);
-	
+
 	clone.mouseleave(function()
 	{
 	    $(this).children("option").each(function()
@@ -64,28 +64,53 @@
 
 	if(settings.availableListboxPosition == "left")
 	{
-	    console.log("izq");
-	    der = clone
-	    izq = availableListBox;
-	    der_label = settings.selectedLabel;
-	    izq_label = settings.availableLabel;
+	    right_listbox = clone
+	    left_listbox = availableListBox;
+	    right_label = settings.selectedLabel;
+	    left_label = settings.availableLabel;
 	} else
 	{
 	    console.log("der");
-	    der = availableListBox;
-	    izq = clone;
-	    der_label = settings.availableLabel;
-	    izq_label = settings.selectedLabel;
+	    right_listbox = availableListBox;
+	    left_listbox = clone;
+	    right_label = settings.availableLabel;
+	    left_label = settings.selectedLabel;
 	}
-	
-	table = $("<table>").attr("id","table_listboxdual_"+id_dst).addClass("");
-	
-	
-	$(dst).replaceWith(table.append($("<tr>").append($("<td>").append($("<label>").text(izq_label)).append(izq)).append($("<td>").append($("<div>").addClass("listbox-dual-div-buttons").append(button_up).append($("<br>")).append(button_add).append($("<br>")).append(button_addall).append($("<br>")).append(button_delall).append($("<br>")).append(button_del).append($("<br>")).append(button_down).append($("<br>")))).append($("<td>").append($("<label>").text(der_label)).append(der))));
-	
-	
-	
-	
+
+	table = $("<table>").attr("id", "table_listboxdual_" + id_dst).addClass("listbox-dual-table");
+
+	row = $("<tr>");
+
+	left_column = $("<div>").addClass("listbox-dual-div-left");
+	left_column.append($("<label>").text(left_label));
+	left_column.append(left_listbox);
+
+	buttons_column = $("<div>").addClass("btn-group-vertical listbox-dual-div-buttons").attr("role", "group").attr("aria-label", "...");
+	buttons_column.append(button_up);
+	buttons_column.append($("<br>"));
+	buttons_column.append(button_add);
+	buttons_column.append($("<br>"));
+	buttons_column.append(button_addall);
+	buttons_column.append($("<br>"));
+	buttons_column.append(button_delall);
+	buttons_column.append($("<br>"));
+	buttons_column.append(button_del);
+	buttons_column.append($("<br>"));
+	buttons_column.append(button_down);
+	// buttons_column.append($("<br>"));
+
+	right_column = $("<div>").addClass("listbox-dual-div-right");
+	right_column.append($("<label>").text(right_label));
+	right_column.append(right_listbox);
+
+	row.append($("<td>").append(left_column)); // LEFT LISTBOX
+	row.append($("<td>").append(buttons_column)); // BUTTONS
+	row.append($("<td>").append(right_column)); // RIGHT LISTBOX
+
+	table.append(row);
+
+	$(dst).replaceWith(table);
+
 	button_up.click(function()
 	{
 	    $(dst + " option:selected").each(function()
@@ -182,4 +207,4 @@
 	    });
     }
 
-}(jQuery));
+}(jQuery) );
