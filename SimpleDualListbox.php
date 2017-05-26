@@ -22,6 +22,8 @@ class SimpleDualListbox extends InputWidget
 	public $clientOptions = [];
 	public $label;
 	public $hint;
+	public $useGroupDiv;
+	public $template = '{label}{listbox}{hint}';
 	
 	/**
 	 *
@@ -98,26 +100,45 @@ class SimpleDualListbox extends InputWidget
 			
 			$content = '';
 			
+			$label = '';
+			$hint = '';
+			
 			if ($this->label)
 			{
-				$content .= Html::label($this->label, $this->name, ['class' => 'control-label']);
+				$label = Html::label($this->label, $this->name, [
+					'class' => 'control-label' 
+				]);
 			}
-			
-			$content .= Html::listBox($this->name, $this->selection, $list['selected'], $this->options);
 			
 			if ($this->hint)
 			{
-				$content .= Html::tag('div', $this->hint, [
+				$hint = Html::tag('div', $this->hint, [
 					'class' => 'hint-block' 
 				]);
 			}
-			$content .= Html::tag('div', '', [
-				'class' => 'help-block' 
-			]);
 			
-			$element = Html::tag('div', $content, [
-				'class' => 'form-group' 
-			]);
+			$listbox = Html::listBox($this->name, $this->selection, $list['selected'], $this->options);
+			
+			/*
+			 * $content .= Html::tag('div', '', [
+			 * 'class' => 'help-block'
+			 * ]);
+			 */
+			
+			$content = $this->template;
+			$content = str_replace('{label}', $label, $content);
+			$content = str_replace('{listbox}', $listbox, $content);
+			$content = str_replace('{hint}', $listbox, $content);
+			
+			if ($this->useGroupDiv)
+			{
+				$element = Html::tag('div', $content, [
+					'class' => 'form-group' 
+				]);
+			} else
+			{
+				$element = $content;
+			}
 		}
 		$this->items_nosel = $list['noselected'];
 		
