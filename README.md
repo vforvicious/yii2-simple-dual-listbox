@@ -38,7 +38,7 @@ Once the extension is installed, simply use it in your code by  :
 
 ```php
 
-	use edwinhaq\simpleduallistbox;
+	use edwinhaq\simpleduallistbox\SimpleDualListbox;
 	
 	// ... Form definition
 	
