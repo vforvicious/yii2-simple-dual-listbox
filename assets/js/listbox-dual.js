@@ -87,18 +87,12 @@
 
 	buttons_column = $("<div>").addClass("btn-group-vertical listbox-dual-div-buttons").attr("role", "group").attr("aria-label", "...");
 	buttons_column.append(button_up);
-	buttons_column.append($("<br>"));
 	buttons_column.append(button_add);
-	buttons_column.append($("<br>"));
 	buttons_column.append(button_addall);
-	buttons_column.append($("<br>"));
 	buttons_column.append(button_delall);
-	buttons_column.append($("<br>"));
 	buttons_column.append(button_del);
-	buttons_column.append($("<br>"));
 	buttons_column.append(button_down);
-	// buttons_column.append($("<br>"));
-
+	
 	right_column = $("<div>").addClass("listbox-dual-div-right");
 	right_column.append($("<label>").text(right_label));
 	right_column.append(right_listbox);
