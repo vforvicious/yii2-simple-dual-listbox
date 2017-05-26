@@ -1,24 +1,25 @@
 @CHARSET "UTF-8";
 
-.listbox-dual-button {
-	width: 100%;
-	margin: 0px;
+
+.simple-dual-listbox-table {
+	
 }
 
-.listbox-dual-div-buttons {
+.simple-dual-listbox-div-left {
+	
+}
+
+.simple-dual-listbox-buttons {
 	width: 120px;
 	padding-left: 15px;
 	padding-right: 15px;
 }
 
-.listbox-dual-div-left {
-	
+.simple-dual-listbox-button {
+	width: 100%;
+	margin: 0px;
 }
 
-.listbox-dual-div-right {
-	
-}
-
-.listbox-dual-table {
+.simple-dual-listbox-div-right {
 	
 }

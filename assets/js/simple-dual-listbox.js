@@ -4,7 +4,7 @@
 ;
 ( function($)
 {
-    var pluginName = 'listbox-dual';
+    var pluginName = 'simple-dual-listbox';
 
     $.fn.listboxdual = function(options, data)
     {
@@ -36,7 +36,7 @@
 	var dst = "#" + id_dst;
 	var src = "#" + id_src;
 
-	var gen_button = $("<button>").addClass("listbox-dual-button btn btn-default");
+	var gen_button = $("<button>").addClass("simple-dual-listbox-button btn btn-default");
 
 	var button_up = gen_button.clone().attr("id", "up_" + id_dst).text(settings.upButtonText);
 	var button_down = gen_button.clone().attr("id", "down_" + id_dst).text(settings.downButtonText);
@@ -54,14 +54,6 @@
 
 	clone = $(dst).clone(true);
 
-	clone.mouseleave(function()
-	{
-	    $(this).children("option").each(function()
-	    {
-		$(this).prop('selected', true);
-	    });
-	});
-
 	if(settings.availableListboxPosition == "left")
 	{
 	    right_listbox = clone
@@ -77,23 +69,31 @@
 	    left_label = settings.selectedLabel;
 	}
 
-	table = $("<table>").attr("id", "table_listboxdual_" + id_dst).addClass("listbox-dual-table");
+	table = $("<table>").attr("id", "table_simple_dual_listbox_" + id_dst).addClass("simple-dual-listbox-table");
+
+	table.mouseleave(function()
+	{
+	    $("#" + id_dst).children("option").each(function()
+	    {
+		$(this).prop('selected', true);
+	    });
+	});
 
 	row = $("<tr>");
 
-	left_column = $("<div>").addClass("listbox-dual-div-left");
+	left_column = $("<div>").addClass("simple-dual-listbox-div-left");
 	left_column.append($("<label>").text(left_label));
 	left_column.append(left_listbox);
 
-	buttons_column = $("<div>").addClass("btn-group-vertical listbox-dual-div-buttons").attr("role", "group").attr("aria-label", "...");
+	buttons_column = $("<div>").addClass("btn-group-vertical simple-dual-listbox-div-buttons").attr("role", "group").attr("aria-label", "...");
 	buttons_column.append(button_up);
 	buttons_column.append(button_add);
 	buttons_column.append(button_addall);
 	buttons_column.append(button_delall);
 	buttons_column.append(button_del);
 	buttons_column.append(button_down);
-	
-	right_column = $("<div>").addClass("listbox-dual-div-right");
+
+	right_column = $("<div>").addClass("simple-dual-listbox-div-right");
 	right_column.append($("<label>").text(right_label));
 	right_column.append(right_listbox);
 
@@ -101,7 +101,7 @@
 	row.append($("<td>").append(buttons_column)); // BUTTONS
 	row.append($("<td>").append(right_column)); // RIGHT LISTBOX
 
-	table.append(row);
+	table.append($("<tbody>").append(row));
 
 	$(dst).replaceWith(table);
 
@@ -161,7 +161,7 @@
     {
 	if(all)
 	{
-	    $(src + " option").attr("selected", "selected");
+	    $(src + " option").prop('selected', true);
 	}
 	var vals = [];
 	var text = [];
@@ -176,7 +176,8 @@
 	for(i = 0; i < vals.length; i++)
 	{
 	    $(src + " option[value = \'" + vals[i] + "\']").remove();
-	    $(dst).append("<option title=\'" + titles[i] + "\' value=\'" + vals[i] + "\'>" + text[i] + "</option>");
+	    $(dst).append($("<option>").attr("title",titles[i]).attr("value",vals[i]).text(text[i]) )
+	   // $(dst).append("<option title=\'" + titles[i] + "\' value=\'" + vals[i] + "\'>" + text[i] + "</option>");
 	}
 	$(dst + " option").attr("selected", true);
 	$(src + " option").attr("selected", true);
@@ -185,20 +186,6 @@
     function listbox_dual_remove(src, dst, all)
     {
 	listbox_dual_add(dst, src, all);
-    }
-
-    function add_remove_reg(button, src, dst, action, all)
-    {
-	if(action == "add")
-	    $(button).click(function()
-	    {
-		listbox_dual_add(src, dst, all);
-	    });
-	else
-	    $(button).click(function()
-	    {
-		listbox_dual_remove(src, dst, all);
-	    });
     }
 
 }(jQuery) );

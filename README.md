@@ -42,10 +42,13 @@ Once the extension is installed, simply use it in your code by  :
 	
 	// ... Form definition
 	
+	$items = ['1' => 'Item1', '2' => 'Item2', '3' => 'Item3',];
+	
 	$options = [];
 	$options['size'] = 10;
 	$options['style'] = 'width:200px';
-	
+	$options['options'] = [];		// If 'title' not defined SimpleDualListbox defines it for each option item  
+		
 	$clientOptions = [];
 	$clientOptions['availableListboxPosition'] = "left"; 	// options: left (default), right 
 	$clientOptions['upButtonText'] = "UP";	
@@ -58,15 +61,18 @@ Once the extension is installed, simply use it in your code by  :
 	$clientOptions['availableLabel'] = "Available";			
 	
 	$widgetOptions = [];
-	$widgetOptions['label'] = 'Input label';			// Only define when not use model, ignored when model is used
-	$widgetOptions['name'] = 'Input name';				// Only define when not use model, ignored when model is used
-	$widgetOptions['hint'] = 'Hint';					// Only define when not use model, ignored when model is used
-	$widgetOptions['selection'] = [1,2];				// Only define when not use model, ignored when model is used
-	$widgetOptions['id'] = 'Input ID';					// If not defined and model is used SimpleDualListbox use Html::getInputId($this->model, $this->attribute)
-	$widgetOptions['items'] = ['1' => 'Item1', '2' => 'Item2', '3' => 'Item3',];
+	$widgetOptions['label'] = 'Input label';					// Ignored when model is used
+	$widgetOptions['name'] = 'Input name';						// Ignored when model is used
+	$widgetOptions['hint'] = 'Hint';							// Ignored when model is used
+	$widgetOptions['selection'] = [1,2];						// Ignored when model is used
+	$widgetOptions['id'] = 'Input ID';							// Optional
+	$widgetOptions['template'] = '{label}{listbox}{hint}';	// Template used to generate element, by default '{label}{listbox}{hint}'
+	$widgetOptions['useGroupDiv'] = true;						// true by default. Wrap element in a div tag: <div class="form-group"> ... </div>, 
+	$widgetOptions['items'] = $items
 	$widgetOptions['options'] = $options;
 	$widgetOptions['clientOptions'] = $clientOptions; 
-	
+
+	 
 	/*
 	* With model
 	*/
@@ -78,7 +84,7 @@ Once the extension is installed, simply use it in your code by  :
 	/*
 	* Without model
 	*/
-					
+				
 	echo SimpleDualListbox::widget($widgetOptions);
 	
 	// ... End form definition

@@ -6,6 +6,7 @@ use yii\widgets\InputWidget;
 use yii\helpers\Html;
 use yii\helpers\Json;
 
+
 /**
  *
  * @package yii2-simple-dual-listbox
@@ -15,14 +16,15 @@ use yii\helpers\Json;
  */
 class SimpleDualListbox extends InputWidget
 {
-	public $items = [];
 	private $items_nosel = [];
+	private $id;
+	public $items = [];
 	public $selection = [];
 	public $options = [];
 	public $clientOptions = [];
 	public $label;
 	public $hint;
-	public $useGroupDiv;
+	public $useGroupDiv = true;
 	public $template = '{label}{listbox}{hint}';
 	
 	/**
@@ -51,6 +53,23 @@ class SimpleDualListbox extends InputWidget
 				$list['selected'][$id_all_item] = $val_all_item;
 		}
 		return $list;
+	}
+	private function updateListboxOptionTitles($itemlist)
+	{
+		if (! isset($this->options['options']))
+		{
+			$this->options['options'] = [];
+		}
+		
+		foreach($itemlist as $k => $v)
+		{
+			if (isset($this->options['options'][$k]['title']))
+			{
+			} else
+			{
+				$this->options['options'][$k]['title'] = $v;
+			}
+		}
 	}
 	
 	/**
@@ -81,12 +100,17 @@ class SimpleDualListbox extends InputWidget
 		
 		if ($this->hasModel())
 		{
+			
 			if (! isset($this->model->{$this->attribute}))
 			{
 				throw new InvalidParamException("Attribute $this->attribute not exists.");
 			}
 			
+			$this->id = (array_key_exists('id', $this->options)) ? $this->options['id'] : Html::getInputId($this->model, $this->attribute);
+			
 			$list = $this->extractSelection($this->items, $this->model->{$this->attribute});
+			
+			$this->updateListboxOptionTitles($list['selected']);
 			
 			$element = Html::activeListBox($this->model, $this->attribute, $list['selected'], $this->options);
 		} else
@@ -96,13 +120,13 @@ class SimpleDualListbox extends InputWidget
 				throw new InvalidParamException('Parameter clientOptions must be an array.');
 			}
 			
+			$this->id = (array_key_exists('id', $this->options)) ? $this->options['id'] : uniqid('simple_dual_listbox_');
+			
 			$list = $this->extractSelection($this->items, $this->selection);
 			
-			$content = '';
+			$this->updateListboxOptionTitles($list['selected']);
 			
 			$label = '';
-			$hint = '';
-			
 			if ($this->label)
 			{
 				$label = Html::label($this->label, $this->name, [
@@ -110,6 +134,7 @@ class SimpleDualListbox extends InputWidget
 				]);
 			}
 			
+			$hint = '';
 			if ($this->hint)
 			{
 				$hint = Html::tag('div', $this->hint, [
@@ -128,12 +153,12 @@ class SimpleDualListbox extends InputWidget
 			$content = $this->template;
 			$content = str_replace('{label}', $label, $content);
 			$content = str_replace('{listbox}', $listbox, $content);
-			$content = str_replace('{hint}', $listbox, $content);
+			$content = str_replace('{hint}', $hint, $content);
 			
 			if ($this->useGroupDiv)
 			{
 				$element = Html::tag('div', $content, [
-					'class' => 'form-group' 
+					'class' => 'form-group', 'id' => '',
 				]);
 			} else
 			{
@@ -153,10 +178,9 @@ class SimpleDualListbox extends InputWidget
 	public function registerClientScript()
 	{
 		$view = $this->getView();
-		ListboxDualAsset::register($view);
-		$id = (array_key_exists('id', $this->options)) ? $this->options['id'] : Html::getInputId($this->model, $this->attribute);
+		SimpleDualListboxAsset::register($view);
 		$options = empty($this->clientOptions) ? '' : Json::encode($this->clientOptions);
 		$data = Json::encode($this->items_nosel);
-		$view->registerJs("$('#$id').listboxdual($options, $data);");
+		$view->registerJs("$('#$this->id').listboxdual($options, $data);");
 	}
 }
