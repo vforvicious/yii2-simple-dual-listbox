@@ -1,6 +1,6 @@
 <?php
 
-namespace edwinhaq\listboxdual;
+namespace edwinhaq\simpleduallistbox;
 
 use yii\widgets\InputWidget;
 use yii\helpers\Html;
@@ -8,18 +8,20 @@ use yii\helpers\Json;
 
 /**
  *
- * @package yii2-listbox-dual
+ * @package yii2-simple-dual-listbox
  * @author Edwin Artunduaga <edwinhaq@gmail.com>
  * @copyright Copyright &copy; Edwin Artunduaga, 2017
  * @version 1.0.0
  */
-class ListboxDual extends InputWidget
+class SimpleDualListbox extends InputWidget
 {
 	public $items = [];
 	private $items_nosel = [];
-	public $selection;
+	public $selection = [];
 	public $options = [];
 	public $clientOptions = [];
+	public $label;
+	public $hint;
 	
 	/**
 	 *
@@ -75,18 +77,14 @@ class ListboxDual extends InputWidget
 		Html::addCssClass($this->options, 'form-control');
 		$this->options['multiple'] = true;
 		
-		
-		
 		if ($this->hasModel())
 		{
 			if (! isset($this->model->{$this->attribute}))
 			{
 				throw new InvalidParamException("Attribute $this->attribute not exists.");
 			}
-						
-			$list = $this->extractSelection($this->items,$this->model->{$this->attribute});
 			
-			
+			$list = $this->extractSelection($this->items, $this->model->{$this->attribute});
 			
 			$element = Html::activeListBox($this->model, $this->attribute, $list['selected'], $this->options);
 		} else
@@ -96,14 +94,32 @@ class ListboxDual extends InputWidget
 				throw new InvalidParamException('Parameter clientOptions must be an array.');
 			}
 			
-			$list = $this->extractSelection($this->items,$this->selection);
+			$list = $this->extractSelection($this->items, $this->selection);
 			
-			$element = Html::listBox($this->name, $this->selection, $list['selected'], $this->options);
+			$content = '';
+			
+			if ($this->label)
+			{
+				$content .= Html::label($this->label, $this->name, ['class' => 'control-label']);
+			}
+			
+			$content .= Html::listBox($this->name, $this->selection, $list['selected'], $this->options);
+			
+			if ($this->hint)
+			{
+				$content .= Html::tag('div', $this->hint, [
+					'class' => 'hint-block' 
+				]);
+			}
+			$content .= Html::tag('div', '', [
+				'class' => 'help-block' 
+			]);
+			
+			$element = Html::tag('div', $content, [
+				'class' => 'form-group' 
+			]);
 		}
 		$this->items_nosel = $list['noselected'];
-		
-		
-		
 		
 		$this->registerClientScript();
 		
@@ -117,10 +133,9 @@ class ListboxDual extends InputWidget
 	{
 		$view = $this->getView();
 		ListboxDualAsset::register($view);
-		
 		$id = (array_key_exists('id', $this->options)) ? $this->options['id'] : Html::getInputId($this->model, $this->attribute);
 		$options = empty($this->clientOptions) ? '' : Json::encode($this->clientOptions);
-		$data = Json::encode($this->items_nosel);		
+		$data = Json::encode($this->items_nosel);
 		$view->registerJs("$('#$id').listboxdual($options, $data);");
 	}
 }

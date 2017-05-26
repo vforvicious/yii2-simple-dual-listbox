@@ -1,5 +1,5 @@
 {
-	"name" : "edwinhaq/yii2-listbox-dual",
+	"name" : "edwinhaq/yii2-simple-dual-listbox",
 	"description" : "Listbox Dual",
 	"type" : "yii2-extension",
 	"keywords" : [
@@ -14,7 +14,7 @@
 		}
 	],
 	"require" : {
-		"yiisoft/yii2" : ">=2.0.11"
+		"yiisoft/yii2" : ">2.0.0"
 	},
 	"autoload" : {
 		"psr-4" : {
