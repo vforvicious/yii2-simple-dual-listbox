@@ -89,7 +89,6 @@ Once the extension is installed, simply use it in your code by  :
 	
 	// ... End form definition
 	
-?>
 ```
 
 History
