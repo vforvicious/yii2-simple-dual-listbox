@@ -25,7 +25,7 @@ php composer.phar require --prefer-dist edwinhaq/yii2-simple-dual-listbox "*"
 or add
 
 ```
-"edwinhaq/yii2-listbox-dual": "*"
+"edwinhaq/yii2-simple-dual-listbox": "*"
 ```
 
 to the require section of your `composer.json` file.
