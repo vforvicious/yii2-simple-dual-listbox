@@ -52,7 +52,7 @@
 	    availableListBox.append($("<option>").attr("value", key).attr("title", value).text(value));
 	});
 
-	clone = $(dst).clone(true);
+	clone = $(dst).clone(true).removeAttr("name");
 
 	if(settings.availableListboxPosition == "left")
 	{
