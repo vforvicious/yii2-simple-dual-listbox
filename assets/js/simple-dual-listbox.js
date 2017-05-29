@@ -8,7 +8,6 @@
 
     $.fn.listboxdual = function(options, data)
     {
-	console.log(data);
 	var settings = $.extend(
 	{}, $.fn.listboxdual.defaults, options);
 	addRemoveElement(this, data, settings);
@@ -17,7 +16,7 @@
 
     $.fn.listboxdual.defaults =
     {
-	availableListboxPosition: "left", // options: left, right (default)
+	availableListboxPosition: "left", // options (default): left, right
 	upButtonText: "UP",
 	addButtonText: "ADD",
 	addAllButtonText: "ADDALL",
@@ -30,7 +29,6 @@
 
     function addRemoveElement(element, data, settings)
     {
-	console.log(data);
 	var id_dst = element.attr("id");
 	var id_src = id_dst + "_all";
 	var dst = "#" + id_dst;
@@ -54,19 +52,20 @@
 
 	clone = $(dst).clone(true).removeAttr("name");
 
-	if(settings.availableListboxPosition == "left")
+	if(settings.availableListboxPosition != "left")
+	{
+	    right_listbox = availableListBox;
+	    left_listbox = clone;
+	    right_label = settings.availableLabel;
+	    left_label = settings.selectedLabel;
+
+	} else
 	{
 	    right_listbox = clone
 	    left_listbox = availableListBox;
 	    right_label = settings.selectedLabel;
 	    left_label = settings.availableLabel;
-	} else
-	{
-	    console.log("der");
-	    right_listbox = availableListBox;
-	    left_listbox = clone;
-	    right_label = settings.availableLabel;
-	    left_label = settings.selectedLabel;
+
 	}
 
 	table = $("<table>").attr("id", "table_simple_dual_listbox_" + id_dst).addClass("simple-dual-listbox-table");
@@ -176,8 +175,9 @@
 	for(i = 0; i < vals.length; i++)
 	{
 	    $(src + " option[value = \'" + vals[i] + "\']").remove();
-	    $(dst).append($("<option>").attr("title",titles[i]).attr("value",vals[i]).text(text[i]) )
-	   // $(dst).append("<option title=\'" + titles[i] + "\' value=\'" + vals[i] + "\'>" + text[i] + "</option>");
+	    $(dst).append($("<option>").attr("title", titles[i]).attr("value", vals[i]).text(text[i]))
+	    // $(dst).append("<option title=\'" + titles[i] + "\' value=\'" +
+	    // vals[i] + "\'>" + text[i] + "</option>");
 	}
 	$(dst + " option").attr("selected", true);
 	$(src + " option").attr("selected", true);
