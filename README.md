@@ -61,14 +61,14 @@ Once the extension is installed, simply use it in your code by  :
 	$clientOptions['availableLabel'] = "Available";			
 	
 	$widgetOptions = [];
-	$widgetOptions['label'] = 'Input label';					// Ignored when model is used
-	$widgetOptions['name'] = 'Input name';						// Ignored when model is used
-	$widgetOptions['hint'] = 'Hint';							// Ignored when model is used
-	$widgetOptions['selection'] = [1,2];						// Ignored when model is used
-	$widgetOptions['id'] = 'Input ID';							// Optional
-	$widgetOptions['template'] = '{label}{listbox}{hint}';	// Template used to generate element, by default '{label}{listbox}{hint}'
-	$widgetOptions['useGroupDiv'] = true;						// true by default. Wrap element in a div tag: <div class="form-group"> ... </div>, 
-	$widgetOptions['items'] = $items
+	$widgetOptions['label'] = 'InputLabel'; // Ignored when model is used
+	$widgetOptions['name'] = 'InputName'; // Ignored when model is used
+	$widgetOptions['hint'] = 'Hint'; // Ignored when model is used
+	$widgetOptions['selection'] = [1,2]; // Ignored when model is used
+	$widgetOptions['id'] = 'Input ID'; // Optional
+	$widgetOptions['template'] = '{label}{listbox}{hint}'; // Used to generate element, by default '{label}{listbox}{hint}'
+	$widgetOptions['useGroupDiv'] = true; // true by default. Wrap element in a div tag: <div class="form-group"> ... </div>, 
+	$widgetOptions['items'] = $items;
 	$widgetOptions['options'] = $options;
 	$widgetOptions['clientOptions'] = $clientOptions; 
 
@@ -95,5 +95,5 @@ Once the extension is installed, simply use it in your code by  :
 History
 -------
 
-+ Version 1.0.0 (2017-05-26)
++ Version 1.0.0 (2017-05-28)
     + Tested on Yii 2.0.6
