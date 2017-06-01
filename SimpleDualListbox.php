@@ -6,7 +6,6 @@ use yii\widgets\InputWidget;
 use yii\helpers\Html;
 use yii\helpers\Json;
 
-
 /**
  *
  * @package yii2-simple-dual-listbox
@@ -158,7 +157,8 @@ class SimpleDualListbox extends InputWidget
 			if ($this->useGroupDiv)
 			{
 				$element = Html::tag('div', $content, [
-					'class' => 'form-group', 'id' => '',
+					'class' => 'form-group',
+					'id' => '' 
 				]);
 			} else
 			{
@@ -179,7 +179,7 @@ class SimpleDualListbox extends InputWidget
 	{
 		$view = $this->getView();
 		SimpleDualListboxAsset::register($view);
-		$options = empty($this->clientOptions) ? '' : Json::encode($this->clientOptions);
+		$options = Json::encode(empty($this->clientOptions) ? [] : $this->clientOptions);
 		$data = Json::encode($this->items_nosel);
 		$view->registerJs("$('#$this->id').listboxdual($options, $data);");
 	}
