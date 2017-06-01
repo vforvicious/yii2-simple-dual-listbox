@@ -34,7 +34,10 @@ class SimpleDualListbox extends InputWidget
 	 */
 	private function extractSelection($all = [], $sel = [])
 	{
-		$list = [];
+		$list = [
+			'noselected' => [],
+			'selected' => [],
+		];
 		foreach($all as $id_all_item => $val_all_item)
 		{
 			$tmp = true;
