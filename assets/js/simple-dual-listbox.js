@@ -43,15 +43,18 @@
 	var button_del = gen_button.clone().attr("id", "del_" + id_dst).text(settings.remButtonText);
 	var button_delall = gen_button.clone().attr("id", "delall_" + id_dst).text(settings.remAllButtonText);
 
-	var availableListBox = element.clone().attr("id", id_src).empty();
-
+	var availableListBox = element.clone();
+	availableListBox.attr("id", id_src).empty();
+	availableListBox.removeAttr("name");
+	
 	$.each(data, function(key, value)
 	{
 	    availableListBox.append($("<option>").attr("value", key).attr("title", value).text(value));
 	});
 
-	clone = $(dst).clone(true).removeAttr("name");
-
+	clone = $(dst).clone(true);
+	
+	
 	if(settings.availableListboxPosition != "left")
 	{
 	    right_listbox = availableListBox;
