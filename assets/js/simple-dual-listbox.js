@@ -81,7 +81,7 @@
 	row = $("<tr>");
 
 	left_column = $("<div>").addClass("simple-dual-listbox-div-left");
-	left_column.append($("<label>").text(left_label));
+	left_column.append($("<label>").addClass("control-label").text(left_label));
 	left_column.append(left_listbox);
 
 	buttons_column = $("<div>").addClass("btn-group-vertical simple-dual-listbox-div-buttons").attr("role", "group").attr("aria-label", "...");
@@ -93,7 +93,7 @@
 	buttons_column.append(button_down);
 
 	right_column = $("<div>").addClass("simple-dual-listbox-div-right");
-	right_column.append($("<label>").text(right_label));
+	right_column.append($("<label>").addClass("control-label").text(right_label));
 	right_column.append(right_listbox);
 
 	row.append($("<td>").append(left_column)); // LEFT LISTBOX
