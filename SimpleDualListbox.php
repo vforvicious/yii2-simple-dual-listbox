@@ -24,6 +24,7 @@ class SimpleDualListbox extends InputWidget
 	public $label;
 	public $hint;
 	public $useGroupDiv = true;
+	public $groupDivId = '';
 	public $template = '{label}{listbox}{hint}';
 	
 	/**
@@ -161,7 +162,7 @@ class SimpleDualListbox extends InputWidget
 			{
 				$element = Html::tag('div', $content, [
 					'class' => 'form-group',
-					'id' => '' 
+					'id' => $this->groupDivId,
 				]);
 			} else
 			{
