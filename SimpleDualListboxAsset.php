@@ -8,15 +8,13 @@
  */
 namespace edwinhaq\simpleduallistbox;
 
-use Yii;
 use yii\web\AssetBundle;
 
 /**
  * Asset bundle for SimpleDualListbox widget.
  *
- * @see https://github.com/edwinhaq/yii2-listbox-dual
  * @author Edwin Artunduaga <edwinhaq@gmail.com>
- * @since 1.0
+ * @since 1.0.0
  */
 class SimpleDualListboxAsset extends AssetBundle
 {
@@ -25,21 +23,22 @@ class SimpleDualListboxAsset extends AssetBundle
 	 */
 	public $depends = [
 		'yii\web\JqueryAsset',
-		'yii\bootstrap\BootstrapAsset' 
+		'yii\bootstrap\BootstrapAsset'
 	];
-	
+
 	/**
-	 * @inheritdoc
+	 *
+	 * {@inheritDoc}
+	 * @see \yii\web\AssetBundle::init()
 	 */
 	public function init()
 	{
 		$this->sourcePath = __DIR__ . '/assets';
-		
 		$this->css = [
-			'css/simple-dual-listbox.css' 
+				YII_DEBUG ? 'css/simple-dual-listbox.css' : 'css/simple-dual-listbox.min.css'
 		];
 		$this->js = [
-			'js/simple-dual-listbox.js' 
+				YII_DEBUG ? 'js/simple-dual-listbox.js' : 'js/simple-dual-listbox.min.js'
 		];
 		parent::init();
 	}
