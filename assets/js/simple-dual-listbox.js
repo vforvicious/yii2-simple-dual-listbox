@@ -103,7 +103,7 @@
 		});
 		button_down.click(function()
 		{
-			var countOptions = $(dst + " option").size();
+			var countOptions = $(dst + " option").length;
 			$(dst + " option:selected").each(function()
 			{
 				var newPos = $(dst + " option").index(this) + 1;

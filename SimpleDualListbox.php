@@ -27,78 +27,80 @@ class SimpleDualListbox extends InputWidget
 	 * @var array None selected items, private use
 	 */
 	private $items_nosel = [ ];
-
+	
 	/**
 	 *
 	 * @var string HTML element id, private use
 	 */
 	private $id;
-
+	
 	/**
 	 *
 	 * @var array Widget items
 	 */
 	public $items = [ ];
-
+	
 	/**
 	 *
 	 * @var array Selected items in widget
 	 */
 	public $selection = [ ];
-
+	
 	/**
 	 *
 	 * @var array HTML attributes for the widget
 	 */
 	public $options = [ ];
-
+	
 	/**
 	 *
 	 * @var array options for javascript functions
 	 */
 	public $clientOptions = [ ];
-
+	
 	/**
 	 *
 	 * @var string Label for input widget
 	 */
 	public $label;
-
+	
 	/**
 	 *
 	 * @var string Hint to show for input widget
 	 */
 	public $hint;
-
+	
 	/**
 	 *
 	 * @var boolean if true widget wraps element in <div class='form-group'> ... </div>
 	 */
 	public $useGroupDiv = true;
-
+	
 	/**
 	 *
 	 * @var string if useGroupDiv is set to true, groupDivId sets id for wrapping div
 	 */
 	public $groupDivId = '';
-
+	
 	/**
 	 *
 	 * @var string template for Widget HTML elements
 	 */
 	public $template = '{label}{listbox}{hint}';
-
+	
 	/**
 	 *
-	 * @param array $all All the items
-	 * @param array $sel Selected items
+	 * @param array $all
+	 *        	All the items
+	 * @param array $sel
+	 *        	Selected items
 	 * @return array Items separated (selected and none selected)
 	 */
 	private function extractSelection($all = [], $sel = [])
 	{
-		$list = [
+		$list = [ 
 			'noselected' => [ ],
-			'selected' => [ ]
+			'selected' => [ ] 
 		];
 		foreach ( $all as $id_all_item => $val_all_item )
 		{
@@ -112,13 +114,25 @@ class SimpleDualListbox extends InputWidget
 				}
 			}
 			if ($tmp)
-				$list ['noselected'] [$id_all_item] = $val_all_item;
+				$list['noselected'][$id_all_item] = $val_all_item;
 			else
-				$list ['selected'] [$id_all_item] = $val_all_item;
+				$list['selected'][$id_all_item] = $val_all_item;
 		}
+		$selected = [ ];
+		foreach ( $sel as $id_sel_item )
+		{
+			if (isset($list['selected'][$id_sel_item]))
+			{
+				$selected[$id_sel_item] = $list['selected'][$id_sel_item];
+			} else
+			{
+				// WTF?
+			}
+		}
+		$list['selected'] = $selected;
 		return $list;
 	}
-
+	
 	/**
 	 * Update each item with title attribute if is set in options settings
 	 *
@@ -126,22 +140,22 @@ class SimpleDualListbox extends InputWidget
 	 */
 	private function updateListboxOptionTitles($itemlist)
 	{
-		if (! isset ( $this->options ['options'] ))
+		if (! isset($this->options['options']))
 		{
-			$this->options ['options'] = [ ];
+			$this->options['options'] = [ ];
 		}
-
+		
 		foreach ( $itemlist as $k => $v )
 		{
-			if (isset ( $this->options ['options'] [$k] ['title'] ))
+			if (isset($this->options['options'][$k]['title']))
 			{
 			} else
 			{
-				$this->options ['options'] [$k] ['title'] = $v;
+				$this->options['options'][$k]['title'] = $v;
 			}
 		}
 	}
-
+	
 	/**
 	 *
 	 * {@inheritdoc}
@@ -149,106 +163,106 @@ class SimpleDualListbox extends InputWidget
 	 */
 	public function run()
 	{
-		if (! is_array ( $this->items ))
+		if (! is_array($this->items))
 		{
-			throw new InvalidParamException ( 'Parameter items must be an array.' );
+			throw new InvalidParamException('Parameter items must be an array.');
 		}
-
-		if (! is_array ( $this->options ))
+		
+		if (! is_array($this->options))
 		{
-			throw new InvalidParamException ( 'Parameter options must be an array.' );
+			throw new InvalidParamException('Parameter options must be an array.');
 		}
-
-		if (! is_array ( $this->clientOptions ))
+		
+		if (! is_array($this->clientOptions))
 		{
-			throw new InvalidParamException ( 'Parameter clientOptions must be an array.' );
+			throw new InvalidParamException('Parameter clientOptions must be an array.');
 		}
-
-		Html::addCssClass ( $this->options, 'form-control' );
-		$this->options ['multiple'] = true;
-
-		if ($this->hasModel ())
+		
+		Html::addCssClass($this->options, 'form-control');
+		$this->options['multiple'] = true;
+		
+		if ($this->hasModel())
 		{
-
-			if (! isset ( $this->model->{$this->attribute} ))
+			
+			if (! isset($this->model->{$this->attribute}))
 			{
-				throw new InvalidParamException ( "Attribute $this->attribute not exists." );
+				throw new InvalidParamException("Attribute $this->attribute not exists.");
 			}
-
-			$this->id = (array_key_exists ( 'id', $this->options )) ? $this->options ['id'] : Html::getInputId ( $this->model, $this->attribute );
-
-			$list = $this->extractSelection ( $this->items, $this->model->{$this->attribute} );
-
-			$this->updateListboxOptionTitles ( $list ['selected'] );
-
-			$element = Html::activeListBox ( $this->model, $this->attribute, $list ['selected'], $this->options );
+			
+			$this->id = (array_key_exists('id', $this->options)) ? $this->options['id'] : Html::getInputId($this->model, $this->attribute);
+			
+			$list = $this->extractSelection($this->items, $this->model->{$this->attribute});
+			
+			$this->updateListboxOptionTitles($list['selected']);
+			
+			$element = Html::activeListBox($this->model, $this->attribute, $list['selected'], $this->options);
 		} else
 		{
-			if (! is_array ( $this->selection ))
+			if (! is_array($this->selection))
 			{
-				throw new InvalidParamException ( 'Parameter clientOptions must be an array.' );
+				throw new InvalidParamException('Parameter clientOptions must be an array.');
 			}
-
-			$this->id = (array_key_exists ( 'id', $this->options )) ? $this->options ['id'] : uniqid ( 'simple_dual_listbox_' );
-
-			$list = $this->extractSelection ( $this->items, $this->selection );
-
-			$this->updateListboxOptionTitles ( $list ['selected'] );
-
+			
+			$this->id = (array_key_exists('id', $this->options)) ? $this->options['id'] : uniqid('simple_dual_listbox_');
+			
+			$list = $this->extractSelection($this->items, $this->selection);
+			
+			$this->updateListboxOptionTitles($list['selected']);
+			
 			$label = '';
 			if ($this->label)
 			{
-				$label = Html::label ( $this->label, $this->name, [
-					'class' => 'control-label'
-				] );
+				$label = Html::label($this->label, $this->name, [ 
+					'class' => 'control-label' 
+				]);
 			}
-
+			
 			$hint = '';
 			if ($this->hint)
 			{
-				$hint = Html::tag ( 'div', $this->hint, [
-					'class' => 'hint-block'
-				] );
+				$hint = Html::tag('div', $this->hint, [ 
+					'class' => 'hint-block' 
+				]);
 			}
-
-			$listbox = Html::listBox ( $this->name, $this->selection, $list ['selected'], $this->options );
+			
+			$listbox = Html::listBox($this->name, $this->selection, $list['selected'], $this->options);
 			/*
 			 * $content .= Html::tag('div', '', [
 			 * 'class' => 'help-block'
 			 * ]);
 			 */
 			$content = $this->template;
-			$content = str_replace ( '{label}', $label, $content );
-			$content = str_replace ( '{listbox}', $listbox, $content );
-			$content = str_replace ( '{hint}', $hint, $content );
-
+			$content = str_replace('{label}', $label, $content);
+			$content = str_replace('{listbox}', $listbox, $content);
+			$content = str_replace('{hint}', $hint, $content);
+			
 			if ($this->useGroupDiv)
 			{
-				$element = Html::tag ( 'div', $content, [
+				$element = Html::tag('div', $content, [ 
 					'class' => 'form-group',
-					'id' => $this->groupDivId
-				] );
+					'id' => $this->groupDivId 
+				]);
 			} else
 			{
 				$element = $content;
 			}
 		}
-		$this->items_nosel = $list ['noselected'];
-
-		$this->registerClientScript ();
-
+		$this->items_nosel = $list['noselected'];
+		
+		$this->registerClientScript();
+		
 		return $element;
 	}
-
+	
 	/**
 	 * Registers the required JavaScript.
 	 */
 	public function registerClientScript()
 	{
-		$view = $this->getView ();
-		SimpleDualListboxAsset::register ( $view );
-		$options = Json::encode ( empty ( $this->clientOptions ) ? [ ] : $this->clientOptions );
-		$data = Json::encode ( $this->items_nosel );
-		$view->registerJs ( "$('#$this->id').listboxdual($options, $data);" );
+		$view = $this->getView();
+		SimpleDualListboxAsset::register($view);
+		$options = Json::encode(empty($this->clientOptions) ? [ ] : $this->clientOptions);
+		$data = Json::encode($this->items_nosel);
+		$view->registerJs("$('#$this->id').listboxdual($options, $data);");
 	}
 }
