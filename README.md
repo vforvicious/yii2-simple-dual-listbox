@@ -72,14 +72,12 @@ Once the extension is installed, simply use it in your code by  :
 	$widgetOptions['options'] = $options;
 	$widgetOptions['clientOptions'] = $clientOptions;
 
-
 	/*
 	* With model
 	*/
 	$model->attribute = [1,2];
 
 	$field = $form->field($model, 'attribute')->widget(SimpleDualListbox::className(), $widgetOptions);
-
 
 	/*
 	* Without model
@@ -98,3 +96,5 @@ History
     + Tested on Yii 2.0.6
 + Version 1.0.1 (2017-10-31)
     + Tested on Yii 2.0.12
++ Version 1.0.2 (2018-02-28)
+    + Tested on Yii 2.0.13.1
