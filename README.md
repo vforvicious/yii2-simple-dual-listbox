@@ -51,6 +51,7 @@ Once the extension is installed, simply use it in your code by  :
 
 	$clientOptions = [];
 	$clientOptions['availableListboxPosition'] = "left"; 	// options: left (default), right
+	$clientOptions['availableListSort'] = "asc"; 	// options: none (default), asc, desc
 	$clientOptions['upButtonText'] = "UP";
 	$clientOptions['addButtonText'] = "ADD";
 	$clientOptions['addAllButtonText'] = "ADDALL";
@@ -93,8 +94,10 @@ History
 -------
 
 + Version 1.0.0 (2017-05-28)
-    + Tested on Yii 2.0.6
+    + Tested on Yii 2.0.6 
 + Version 1.0.1 (2017-10-31)
-    + Tested on Yii 2.0.12
+    + Tested on Yii 2.0.12 
 + Version 1.0.2 (2018-02-28)
     + Tested on Yii 2.0.13.1
++ Version 1.0.3 (2018-03-22)
+    + Tested on Yii 2.0.15.1
