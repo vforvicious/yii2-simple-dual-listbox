@@ -51,13 +51,15 @@
 		{
 			availableListBox.append($("<option>").attr("value", key).attr("title", value).text(value));
 		});	
-		if(settings.availableListSort == "asc"){
+		if(settings.availableListSort == "alpha_asc"){
 			availableListBox.append( availableListBox.find("option").remove().sort(function(a, b) { var at = $(a).text(), bt = $(b).text(); return (at > bt)?1:((at < bt)?-1:0); })  );
-		} else if(settings.availableListSort == "desc"){
+		} else if(settings.availableListSort == "alpha_desc"){
 			availableListBox.append( availableListBox.find("option").remove().sort(function(a, b) { var at = $(a).text(), bt = $(b).text(); return (at < bt)?1:((at < bt)?-1:0); })  );
-		} else if(settings.availableListSort == "none"){
-			
-		} 
+		} else if(settings.availableListSort == "num_asc"){
+			availableListBox.append( availableListBox.find("option").remove().sort(function(a, b) { var at = $(a).text(), bt = $(b).text(); return at-bt; })  );									
+		} else if(settings.availableListSort == "num_desc"){
+			availableListBox.append( availableListBox.find("option").remove().sort(function(a, b) { var at = $(a).text(), bt = $(b).text(); return bt-at; })  );
+		}
 		clone = $(dst).clone(true);
 		if(settings.availableListboxPosition != "left"){
 			right_listbox = availableListBox;

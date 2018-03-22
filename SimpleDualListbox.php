@@ -22,6 +22,11 @@ use yii\helpers\Json;
  */
 class SimpleDualListbox extends InputWidget
 {
+	public static $SORT_NUM_ASC = "num_asc";
+	public static $SORT_NUM_DESC = "num_desc";
+	public static $SORT_ALPHA_ASC = "alpha_asc";
+	public static $SORT_ALPHA_ASC = "alpha_desc";
+	public static $SORT_NONE = "none";
 	/**
 	 *
 	 * @var array None selected items, private use
