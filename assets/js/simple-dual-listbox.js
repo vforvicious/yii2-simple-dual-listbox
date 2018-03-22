@@ -21,6 +21,7 @@
 	};
 	$.fn.listboxdual.defaults = {
 		availableListboxPosition : "left",
+		availableListSort : "none",
 		upButtonText : "UP",
 		addButtonText : "ADD",
 		addAllButtonText : "ADDALL",
@@ -49,7 +50,14 @@
 		$.each(data, function(key, value)
 		{
 			availableListBox.append($("<option>").attr("value", key).attr("title", value).text(value));
-		});
+		});	
+		if(settings.availableListSort == "asc"){
+			$("#"+id_src).append($("#"+id_src+" option").remove().sort(function(a, b) { var at = $(a).text(), bt = $(b).text(); return (at > bt)?1:((at < bt)?-1:0); }));
+		} else if(settings.availableListSort == "desc"){
+			$("#"+id_src).append($("#"+id_src+" option").remove().sort(function(a, b) { var at = $(a).text(), bt = $(b).text(); return (at < bt)?1:((at > bt)?-1:0); }));
+		} else if(settings.availableListSort == "none"){
+			
+		} 
 		clone = $(dst).clone(true);
 		if(settings.availableListboxPosition != "left"){
 			right_listbox = availableListBox;
