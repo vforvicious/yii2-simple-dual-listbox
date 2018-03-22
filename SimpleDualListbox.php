@@ -25,7 +25,7 @@ class SimpleDualListbox extends InputWidget
 	public static $SORT_NUM_ASC = "num_asc";
 	public static $SORT_NUM_DESC = "num_desc";
 	public static $SORT_ALPHA_ASC = "alpha_asc";
-	public static $SORT_ALPHA_ASC = "alpha_desc";
+	public static $SORT_ALPHA_DESC = "alpha_desc";
 	public static $SORT_NONE = "none";
 	/**
 	 *
