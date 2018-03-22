@@ -52,9 +52,9 @@
 			availableListBox.append($("<option>").attr("value", key).attr("title", value).text(value));
 		});	
 		if(settings.availableListSort == "asc"){
-			$("#"+id_src).append($("#"+id_src+" option").remove().sort(function(a, b) { var at = $(a).text(), bt = $(b).text(); return (at > bt)?1:((at < bt)?-1:0); }));
+			availableListBox.append( availableListBox.find("option").remove().sort(function(a, b) { var at = $(a).text(), bt = $(b).text(); return (at > bt)?1:((at < bt)?-1:0); })  );
 		} else if(settings.availableListSort == "desc"){
-			$("#"+id_src).append($("#"+id_src+" option").remove().sort(function(a, b) { var at = $(a).text(), bt = $(b).text(); return (at < bt)?1:((at > bt)?-1:0); }));
+			availableListBox.append( availableListBox.find("option").remove().sort(function(a, b) { var at = $(a).text(), bt = $(b).text(); return (at < bt)?1:((at < bt)?-1:0); })  );
 		} else if(settings.availableListSort == "none"){
 			
 		} 
