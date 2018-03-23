@@ -51,7 +51,7 @@ Once the extension is installed, simply use it in your code by  :
 
 	$clientOptions = [];
 	$clientOptions['availableListboxPosition'] = "left"; 	// options: left (default), right
-	$clientOptions['availableListSort'] = "asc"; 	// options: none (default), asc, desc
+	$clientOptions['availableListSort'] = SimpleDualListbox::$SORT_NUM_ASC;
 	$clientOptions['upButtonText'] = "UP";
 	$clientOptions['addButtonText'] = "ADD";
 	$clientOptions['addAllButtonText'] = "ADDALL";
